@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LikeGojekApp</string>
+    <string name="app_name">Simple Market</string>
     <string name="register">Register</string>
     <string name="username">username</string>
     <string name="email">email</string>
@@ -7,8 +7,9 @@
     <string name="re_type_password">re-type password</string>
     <string name="login">Login</string>
     <string name="mendaftar_sebagai">mendaftar sebagai :</string>
+    <string name="mohon_menunggu">Mohon Menunggu . . .</string>
     <string-array name="asuser">
-        <item>merchant</item>
         <item>biasa</item>
+        <item>merchant</item>
     </string-array>
 </resources>

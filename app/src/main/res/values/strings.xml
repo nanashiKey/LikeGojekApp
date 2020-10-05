@@ -8,6 +8,10 @@
     <string name="login">Login</string>
     <string name="mendaftar_sebagai">mendaftar sebagai :</string>
     <string name="mohon_menunggu">Mohon Menunggu . . .</string>
+    <string name="cari_market_terdekat">Cari Market Terdekat</string>
+    <string name="lihat_lokasi">lihat semua lokasi market yang didaftarkan</string>
+    <string name="rorem">lorem ipsum dolor sit amet from deep in the dark</string>
+    <string name="belum_ada_data">Belum Ada Data</string>
     <string-array name="asuser">
         <item>biasa</item>
         <item>merchant</item>

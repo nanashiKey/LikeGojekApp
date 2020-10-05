@@ -24,7 +24,7 @@ class PrefsHelper(ctx : Context) {
         editMode.putString(UID, user.uid)
         editMode.putString(USEREMAIL, user.email)
         editMode.putString(USERNAME, user.username)
-        editMode.putString(USERTYPE, user.userType)
+        editMode.putString(USERTYPE, user.usertype)
         editMode.apply()
     }
 

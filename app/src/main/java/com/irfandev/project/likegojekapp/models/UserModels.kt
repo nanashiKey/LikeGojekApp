@@ -19,5 +19,5 @@ class UserModels : Serializable {
     var username : String ?= null
 
     @SerializedName("usertype")
-    var userType : String ?= null
+    var usertype : String ?= null
 }

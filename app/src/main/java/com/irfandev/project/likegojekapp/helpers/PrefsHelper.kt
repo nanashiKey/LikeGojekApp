@@ -15,6 +15,7 @@ class PrefsHelper(ctx : Context) {
     private val USERTYPE = "USERTYPE"
     private val USEREMAIL = "USERMAIL"
     private val USERLOGIN = "USERLOGIN"
+    private val COUNTERS = "counter"
 
     private val prefshelp = ctx.getSharedPreferences(APPSNAME, Context.MODE_PRIVATE)
     private val editMode = prefshelp.edit()
@@ -51,6 +52,15 @@ class PrefsHelper(ctx : Context) {
 
     fun getStatusLogin() : Boolean{
         return prefshelp.getBoolean(USERLOGIN, false)
+    }
+
+    fun getCounter() : Int{
+        return prefshelp.getInt(COUNTERS, 1)
+    }
+
+    fun setCounter(counterValue : Int){
+        editMode.putInt(COUNTERS, counterValue)
+        editMode.apply()
     }
 
 

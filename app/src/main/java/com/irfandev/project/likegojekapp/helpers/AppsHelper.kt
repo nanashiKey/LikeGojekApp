@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
 import com.irfandev.project.likegojekapp.R
+import com.irfandev.project.likegojekapp.adapters.MapsListAdapter
+import com.irfandev.project.likegojekapp.models.MapsModel
 
 
 /**

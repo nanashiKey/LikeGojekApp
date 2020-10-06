@@ -12,6 +12,12 @@
     <string name="lihat_lokasi">lihat semua lokasi market yang didaftarkan</string>
     <string name="rorem">lorem ipsum dolor sit amet from deep in the dark</string>
     <string name="belum_ada_data">Belum Ada Data</string>
+    <string name="pilih_lokasi_ini">pilih lokasi ini</string>
+    <string name="masukkan_nama_lokasi">masukkan nama lokasi</string>
+    <string name="pilih_lokasi_baru">Tambah Lokasi Baru</string>
+    <string name="tekan_lama_pada_pointer_map_kemudian_geser">tekan lama pada pointer map kemudian geser</string>
+    <string name="masukkan_detail_lokasi">masukkan detail lokasi</string>
+    <string name="batal">Batal</string>
     <string-array name="asuser">
         <item>biasa</item>
         <item>merchant</item>

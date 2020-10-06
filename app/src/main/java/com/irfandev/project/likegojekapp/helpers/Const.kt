@@ -8,5 +8,7 @@ package com.irfandev.project.likegojekapp.helpers
 class Const {
     companion object{
         val REQPERMISSION = 1010
+        val USERFBASE = "pengguna"
+        val MERCHANTFBASE = "marketlocation"
     }
 }

@@ -19,10 +19,12 @@ import com.irfandev.project.likegojekapp.models.MapsModel
 class MapsListAdapter : RecyclerView.Adapter<MapsListAdapter.MapsListViewHolder>{
     lateinit var ctx: Context
     lateinit var mapModels : ArrayList<MapsModel>
+    lateinit var latLongfromAdapter: LatLongfromAdapter
     constructor(){}
-    constructor(ctx : Context, mapModels : ArrayList<MapsModel>){
+    constructor(ctx : Context, mapModels : ArrayList<MapsModel>, latLongfromAdapter: LatLongfromAdapter){
         this.ctx = ctx
         this.mapModels = mapModels
+        this.latLongfromAdapter = latLongfromAdapter
     }
     class MapsListViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         var llayout : LinearLayout = itemView.findViewById(R.id.llayout)
@@ -45,6 +47,11 @@ class MapsListAdapter : RecyclerView.Adapter<MapsListAdapter.MapsListViewHolder>
         holder.tvMapDetail.text = "${oneMap.mapdetail}\nlatitude = ${oneMap.maplatitude} longitude = ${oneMap.maplongitude}"
         holder.llayout.setOnClickListener {
             AppsHelper.showShortToast(ctx, "this is ${oneMap.mapname}")
+            latLongfromAdapter.getLatLong(holder, oneMap, position)
         }
+    }
+
+    interface LatLongfromAdapter{
+        fun getLatLong(viewHolder: MapsListAdapter.MapsListViewHolder, mapPos : MapsModel, pos : Int)
     }
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.irfandev.project.likegojekapp.helpers.AppsHelper
+import com.irfandev.project.likegojekapp.helpers.Const
 import com.irfandev.project.likegojekapp.helpers.PrefsHelper
 import com.irfandev.project.likegojekapp.models.UserModels
 import kotlinx.android.synthetic.main.activity_login.*
@@ -25,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         fAuth = FirebaseAuth.getInstance()
-        dbref = FirebaseDatabase.getInstance().getReference("pengguna")
+        dbref = FirebaseDatabase.getInstance().getReference(Const.USERFBASE)
         val statusLogin = PrefsHelper(this@LoginActivity).getStatusLogin()
         if(statusLogin){
             AppsHelper.goTo(this@LoginActivity, MainActivity::class.java)

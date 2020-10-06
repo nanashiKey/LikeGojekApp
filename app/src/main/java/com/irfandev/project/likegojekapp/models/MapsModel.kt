@@ -16,8 +16,8 @@ class MapsModel : Serializable{
     var mapdetail : String ?= null
 
     @SerializedName("maplatitude")
-    var maplatitude : String ?= null
+    var maplatitude : Double ?= null
 
     @SerializedName("maplongitude")
-    var maplongitude : String ?= null
+    var maplongitude : Double ?= null
 }

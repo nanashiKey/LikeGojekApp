@@ -1,8 +1,7 @@
-package com.irfandev.project.likegojekapp
+package com.irfandev.project.likegojekapp.activities
 
 import android.Manifest
 import android.app.Dialog
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.BitmapFactory
@@ -12,7 +11,6 @@ import android.util.Log.e
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -25,17 +23,15 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.internal.IGoogleMapDelegate
 import com.google.android.gms.maps.model.*
 import com.google.firebase.database.*
+import com.irfandev.project.likegojekapp.R
 import com.irfandev.project.likegojekapp.adapters.MapsListAdapter
 import com.irfandev.project.likegojekapp.helpers.AppsHelper
 import com.irfandev.project.likegojekapp.helpers.Const
 import com.irfandev.project.likegojekapp.helpers.PrefsHelper
 import com.irfandev.project.likegojekapp.models.MapsModel
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_mapsmerchant.*
-import java.lang.Exception
 
 
 /**
@@ -81,15 +77,27 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
+                var counter = 0
                 for (i in snapshot.children){
                     e("TAGCHECK", i.value.toString())
-                    val modelmap = i.getValue(MapsModel::class.java)
-                    listmap.add(modelmap!!)
+                    if(i.value  != null){
+                        val modelmap = i.getValue(MapsModel::class.java)
+                        val currentPost = LatLng(modelmap!!.maplatitude!!, modelmap.maplongitude!!)
+                        placeMarkerInMaps(currentPost, R.mipmap.ic_market)
+                        listmap.add(modelmap)
+                        rcView.visibility = View.VISIBLE
+                        tvError.visibility = View.GONE
+                        mapadapter = MapsListAdapter(this@MapsUserMerchant, listmap, this@MapsUserMerchant)
+                        rcView.adapter = mapadapter
+                        counter++
+                    }else{
+                        AppsHelper.showShortToast(this@MapsUserMerchant, "list map belum tersedia")
+                    }
                 }
-                rcView.visibility = View.VISIBLE
-                tvError.visibility = View.GONE
-                mapadapter = MapsListAdapter(this@MapsUserMerchant, listmap, this@MapsUserMerchant)
-                rcView.adapter = mapadapter
+                e("TAGCHECK", counter.toString())
+                if(counter >= 1){
+                    PrefsHelper(this@MapsUserMerchant).setCounter(counter +1)
+                }
                 loding.dismiss()
             }
         })
@@ -98,10 +106,6 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
 
     override fun onMapReady(p0: GoogleMap?) {
         map = p0!!
-        val latitude = -6.2234748
-        val longitude = 106.9476776
-        val zoomLevel = 15.0f
-        val homeLatLng = LatLng(latitude, longitude)
         map.uiSettings.isZoomControlsEnabled = true
         setMapStyle(map)
         if (ActivityCompat.checkSelfPermission(
@@ -112,13 +116,6 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         map.isMyLocationEnabled = true
@@ -127,7 +124,7 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
             if(location != null){
                 lastLocation = location
                 val currentPost = LatLng(location.latitude, location.longitude)
-                placeMarkerInMaps(currentPost)
+                placeMarkerInMaps(currentPost, R.mipmap.ic_ppl)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPost
                     , 18.0f))
             }
@@ -140,7 +137,9 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
 
     fun setMapStyle(p0 : GoogleMap){
         try{
-            val success = p0.setMapStyle(MapStyleOptions.loadRawResourceStyle(this@MapsUserMerchant, R.raw.map_style))
+            val success = p0.setMapStyle(MapStyleOptions.loadRawResourceStyle(this@MapsUserMerchant,
+                R.raw.map_style
+            ))
             if(!success){
                 e(TAG, "error locking for map style")
             }
@@ -154,7 +153,10 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
         dialogMap.setContentView(R.layout.dialog_seletlocation)
         dialogMap.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT)
-        val settmap : SupportMapFragment = supportFragmentManager.findFragmentById(R.id.frmap) as SupportMapFragment
+        dialogMap.setCancelable(false)
+        val settmap : SupportMapFragment = supportFragmentManager.findFragmentById(
+            R.id.frmap
+        ) as SupportMapFragment
         var gmap : GoogleMap? = null
         val etNamaLokasi : EditText = dialogMap.findViewById(R.id.etNamaLokasi)
         val etDetailLokasi : EditText = dialogMap.findViewById(R.id.etDetailLokasi)
@@ -204,6 +206,7 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
                 AppsHelper.showShortToast(this@MapsUserMerchant, "data berhasil ditambahkan")
                 startActivity(intent)
                 dialogMap.dismiss()
+                overridePendingTransition(0,0)
                 finish()
              }else{
                 AppsHelper.showShortToast(this, "isilah setiap kolom kosong")
@@ -211,16 +214,19 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
         }
         btnClose.setOnClickListener {
             startActivity(intent)
+            overridePendingTransition(0,0)
             finish()
         }
         dialogMap.show()
     }
 
-    fun placeMarkerInMaps(loc : LatLng){
+    fun placeMarkerInMaps(loc : LatLng, mipmap : Int){
         val markerOptions = MarkerOptions().position(loc)
         markerOptions.icon(
             BitmapDescriptorFactory.fromBitmap(
-            BitmapFactory.decodeResource(resources, R.mipmap.ic_market)
+            BitmapFactory.decodeResource(resources,
+                mipmap
+            )
         ))
         map.addMarker(markerOptions)
     }
@@ -233,7 +239,7 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
         val loclat = listmap.get(viewHolder.adapterPosition).maplatitude
         val loclong = listmap.get(viewHolder.adapterPosition).maplongitude
         val currentPost = LatLng(loclat!!, loclong!!)
-        placeMarkerInMaps(currentPost)
+        placeMarkerInMaps(currentPost, R.mipmap.ic_market)
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPost
             , 18.0f))
     }

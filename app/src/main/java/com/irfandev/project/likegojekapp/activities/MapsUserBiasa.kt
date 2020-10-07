@@ -1,4 +1,4 @@
-package com.irfandev.project.likegojekapp
+package com.irfandev.project.likegojekapp.activities
 
 import android.content.res.Resources
 import android.os.Bundle
@@ -11,6 +11,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.irfandev.project.likegojekapp.R
 
 
 /**
@@ -44,7 +45,9 @@ class MapsUserBiasa : AppCompatActivity() , OnMapReadyCallback, GoogleMap.OnMapC
 
     fun setMapStyle(p0 : GoogleMap){
         try{
-            val success = p0.setMapStyle(MapStyleOptions.loadRawResourceStyle(this@MapsUserBiasa, R.raw.map_style))
+            val success = p0.setMapStyle(MapStyleOptions.loadRawResourceStyle(this@MapsUserBiasa,
+                R.raw.map_style
+            ))
             if(!success){
                 Log.e("TAGERROR", "error locking for map style")
             }

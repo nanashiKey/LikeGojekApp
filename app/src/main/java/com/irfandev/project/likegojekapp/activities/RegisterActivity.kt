@@ -1,10 +1,11 @@
-package com.irfandev.project.likegojekapp
+package com.irfandev.project.likegojekapp.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.irfandev.project.likegojekapp.R
 import com.irfandev.project.likegojekapp.helpers.AppsHelper
 import kotlinx.android.synthetic.main.activity_register.*
 

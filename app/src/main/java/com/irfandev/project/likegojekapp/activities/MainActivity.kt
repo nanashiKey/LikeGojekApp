@@ -1,10 +1,10 @@
-package com.irfandev.project.likegojekapp
+package com.irfandev.project.likegojekapp.activities
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.irfandev.project.likegojekapp.R
 import com.irfandev.project.likegojekapp.helpers.AppsHelper
 import com.irfandev.project.likegojekapp.helpers.Const
 import com.irfandev.project.likegojekapp.helpers.PrefsHelper

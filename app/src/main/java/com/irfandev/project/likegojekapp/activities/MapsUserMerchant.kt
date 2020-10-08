@@ -38,7 +38,7 @@ import kotlinx.android.synthetic.main.activity_mapsmerchant.*
  *   created by Irfan Assidiq
  *   email : assidiq.irfan@gmail.com
  **/
-class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, MapsListAdapter.LatLongfromAdapter {
+class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, MapsListAdapter.LatLongfromAdapter {
     lateinit var map : GoogleMap
     private val TAG = MapsUserMerchant::class.java.simpleName
     lateinit var dbref : DatabaseReference
@@ -131,10 +131,6 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
         }
     }
 
-    override fun onMarkerClick(p0: Marker?): Boolean {
-        TODO("Not yet implemented")
-    }
-
     fun setMapStyle(p0 : GoogleMap){
         try{
             val success = p0.setMapStyle(MapStyleOptions.loadRawResourceStyle(this@MapsUserMerchant,
@@ -204,8 +200,8 @@ class MapsUserMerchant : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
                 dbref.child("maplongitude").setValue(longmap)
                 PrefsHelper(this@MapsUserMerchant).setCounter(nilai + 1)
                 AppsHelper.showShortToast(this@MapsUserMerchant, "data berhasil ditambahkan")
-                startActivity(intent)
                 dialogMap.dismiss()
+                startActivity(intent)
                 overridePendingTransition(0,0)
                 finish()
              }else{

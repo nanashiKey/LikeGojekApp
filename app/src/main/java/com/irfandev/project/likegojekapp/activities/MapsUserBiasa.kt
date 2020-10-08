@@ -163,6 +163,7 @@ class MapsUserBiasa : AppCompatActivity() ,
     }
 
     override fun onRoutingFailure(p0: RouteException?) {
+        p0!!.printStackTrace()
     }
 
     override fun onRoutingSuccess(p0: java.util.ArrayList<Route>?, p1: Int) {
@@ -170,8 +171,6 @@ class MapsUserBiasa : AppCompatActivity() ,
             polylines!!.clear()
         }
         val polyOptions = PolylineOptions()
-        var polylineStartLatLng: LatLng? = null
-        var polylineEndLatLng: LatLng? = null
 
         polylines = ArrayList<Polyline>()
         for (i in 0 until p0!!.size) {
@@ -183,28 +182,10 @@ class MapsUserBiasa : AppCompatActivity() ,
                     currentPoly!!.remove()
                 }
                 currentPoly = map.addPolyline(polyOptions)
-                polylineStartLatLng = currentPoly!!.points[0]
-                val k = currentPoly!!.points.size
-                polylineEndLatLng = currentPoly!!.points[k - 1]
                 polylines!!.add(currentPoly!!)
             }
         }
 
-        //Add Marker on route starting position
-
-        //Add Marker on route starting position
-        val startMarker = MarkerOptions()
-        startMarker.position(polylineStartLatLng!!)
-        startMarker.title("Lokasi Awal")
-        map.addMarker(startMarker)
-
-        //Add Marker on route ending position
-
-        //Add Marker on route ending position
-        val endMarker = MarkerOptions()
-        endMarker.position(polylineEndLatLng!!)
-        endMarker.title("Lokasi Tujuan")
-        map.addMarker(endMarker)
     }
 
     fun findRoutes(start : LatLng?, end : LatLng?){
